@@ -3,9 +3,11 @@ from PIL import Image
 from colorama import Style, Back, Fore, init as colorama_init
 from timeit import default_timer as timer
 import sys
+from shutil import get_terminal_size
 
 class ImageInCli:
     image_path = sys.argv[1]
+    width = int(sys.argv[2]) if len(sys.argv) > 1 else get_terminal_size()[0]
 
     def __init__(self):
         colorama_init()
@@ -20,7 +22,7 @@ class ImageInCli:
 
     def get_rgb_matrix(self, char_ratio):
         img = Image.open(self.image_path)
-        basewidth = 200
+        basewidth = self.width
         anti_char_ratio_width = int(basewidth * char_ratio)
         wpercent = (basewidth / float(img.size[0]))
         hsize = int((float(img.size[1]) * float(wpercent)))
