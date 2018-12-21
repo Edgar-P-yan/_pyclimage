@@ -30,28 +30,28 @@ class ImageInCli:
         self.matrix = numpy.asarray(img)
     def init_color_codes(self):
         rgb_color_codes = [
-            [[0, 0, 0], Style.DIM +             Fore.BLACK + '█' + Style.RESET_ALL],
-            [[0, 0, 128], Style.DIM +           Fore.BLUE + '█' + Style.RESET_ALL],
-            [[0, 128, 0], Style.DIM +           Fore.GREEN + '█' + Style.RESET_ALL],
-            [[0, 128, 128], Style.DIM +         Fore.CYAN + '█' + Style.RESET_ALL],
-            [[128, 0, 0], Style.DIM +           Fore.RED + '█' + Style.RESET_ALL],
-            [[128, 0, 128], Style.DIM +         Fore.MAGENTA + '█' + Style.RESET_ALL],
-            [[128, 128, 0], Style.DIM +         Fore.YELLOW + '█' + Style.RESET_ALL],
-            [[192, 192, 192], Style.DIM +       Fore.WHITE + '█' + Style.RESET_ALL],
-            [[128, 128, 128], Style.BRIGHT +    Fore.BLACK + '█' + Style.RESET_ALL],
-            [[0, 0, 255], Style.BRIGHT +        Fore.BLUE + '█' + Style.RESET_ALL],
-            [[0, 255, 0], Style.BRIGHT +        Fore.GREEN + '█' + Style.RESET_ALL],
-            [[0, 255, 255], Style.BRIGHT +      Fore.CYAN + '█' + Style.RESET_ALL],
-            [[255, 0, 0], Style.BRIGHT +        Fore.RED + '█' + Style.RESET_ALL],
-            [[255, 0, 255], Style.BRIGHT +      Fore.MAGENTA + '█' + Style.RESET_ALL],
-            [[255, 255, 0], Style.BRIGHT +      Fore.YELLOW + '█' + Style.RESET_ALL],
-            [[255, 255, 255], Style.BRIGHT +    Fore.WHITE + '█' + Style.RESET_ALL],
-            [[174, 142, 142], Style.DIM + Back.WHITE + Fore.RED + '▒' + Back.BLACK + Style.RESET_ALL],
-            [[219, 140, 145], Style.DIM + Back.LIGHTWHITE_EX + Fore.RED + '▒' + Back.BLACK + Style.RESET_ALL],
-            [[128, 100,   0], Style.DIM + Back.YELLOW + Fore.RED + '▒' + Back.BLACK + Style.RESET_ALL],
-            [[ 80,  56,   0], Style.DIM + Back.GREEN  + Fore.RED + '▓' + Back.BLACK + Style.RESET_ALL],
-            [[ 34,  33,  37], Style.DIM + Back.BLACK  + Style.BRIGHT + Fore.BLACK + '▒' + Back.BLACK + Style.RESET_ALL],
-            [[ 85,  84,  79], Style.DIM + Back.BLACK  + Style.BRIGHT + Fore.BLACK + '▓' + Back.BLACK + Style.RESET_ALL],
+            [[0, 0, 0], Style.DIM +             Fore.BLACK, '█'],
+            [[0, 0, 128], Style.DIM +           Fore.BLUE, '█'],
+            [[0, 128, 0], Style.DIM +           Fore.GREEN, '█'],
+            [[0, 128, 128], Style.DIM +         Fore.CYAN, '█'],
+            [[128, 0, 0], Style.DIM +           Fore.RED, '█'],
+            [[128, 0, 128], Style.DIM +         Fore.MAGENTA, '█'],
+            [[128, 128, 0], Style.DIM +         Fore.YELLOW, '█'],
+            [[192, 192, 192], Style.DIM +       Fore.WHITE, '█'],
+            [[128, 128, 128], Style.BRIGHT +    Fore.BLACK, '█'],
+            [[0, 0, 255], Style.BRIGHT +        Fore.BLUE, '█'],
+            [[0, 255, 0], Style.BRIGHT +        Fore.GREEN, '█'],
+            [[0, 255, 255], Style.BRIGHT +      Fore.CYAN, '█'],
+            [[255, 0, 0], Style.BRIGHT +        Fore.RED, '█'],
+            [[255, 0, 255], Style.BRIGHT +      Fore.MAGENTA, '█'],
+            [[255, 255, 0], Style.BRIGHT +      Fore.YELLOW, '█'],
+            [[255, 255, 255], Style.BRIGHT +    Fore.WHITE, '█'],
+            [[174, 142, 142], Style.DIM + Back.WHITE + Fore.RED, '▒'],
+            [[219, 140, 145], Style.DIM + Back.LIGHTWHITE_EX + Fore.RED, '▒'],
+            [[128, 100,   0], Style.DIM + Back.YELLOW + Fore.RED, '▒'],
+            [[ 80,  56,   0], Style.DIM + Back.GREEN  + Fore.RED, '▓'],
+            [[ 34,  33,  37], Back.BLACK  + Style.BRIGHT + Fore.BLACK, '▒'],
+            [[ 85,  84,  79], Back.BLACK  + Style.BRIGHT + Fore.BLACK, '▓'],
         ]
 
 
@@ -86,11 +86,17 @@ class ImageInCli:
     def draw_image(self):
         print(Back.BLACK)
         whole_string = ''
+        prev_color_code = None
         for row in self.matrix:
             line = ''
             for pixel in row:
                 rgb_str = str(pixel[0]) + ',' + str(pixel[1]) + ',' + str(pixel[2])
-                color_code = self.color_codes[self.nearest_color_indexes[rgb_str]][1]
+                color = self.color_codes[self.nearest_color_indexes[rgb_str]]
+                color_code = ''
+                if not (color[1] == prev_color_code):
+                   color_code += Style.RESET_ALL + color[1]
+                   prev_color_code = color[1]
+                color_code += color[2]
 
                 line += color_code
             whole_string += line + '\n'
