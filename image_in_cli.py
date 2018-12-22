@@ -5,6 +5,7 @@ from timeit import default_timer as timer
 import sys
 from shutil import get_terminal_size
 
+
 class ImageInCli:
     image_path = sys.argv[1]
     width = int(sys.argv[2]) if len(sys.argv) > 1 else get_terminal_size()[0]
@@ -26,34 +27,34 @@ class ImageInCli:
         anti_char_ratio_width = int(basewidth * char_ratio)
         wpercent = (basewidth / float(img.size[0]))
         hsize = int((float(img.size[1]) * float(wpercent)))
-        img = img.resize((anti_char_ratio_width, hsize), Image.ANTIALIAS) 
+        img = img.resize((anti_char_ratio_width, hsize), Image.ANTIALIAS)
         self.matrix = numpy.asarray(img)
+
     def init_color_codes(self):
         rgb_color_codes = [
-            [[0, 0, 0], Style.DIM +             Fore.BLACK, '█'],
-            [[0, 0, 128], Style.DIM +           Fore.BLUE, '█'],
-            [[0, 128, 0], Style.DIM +           Fore.GREEN, '█'],
-            [[0, 128, 128], Style.DIM +         Fore.CYAN, '█'],
-            [[128, 0, 0], Style.DIM +           Fore.RED, '█'],
-            [[128, 0, 128], Style.DIM +         Fore.MAGENTA, '█'],
-            [[128, 128, 0], Style.DIM +         Fore.YELLOW, '█'],
-            [[192, 192, 192], Style.DIM +       Fore.WHITE, '█'],
-            [[128, 128, 128], Style.BRIGHT +    Fore.BLACK, '█'],
-            [[0, 0, 255], Style.BRIGHT +        Fore.BLUE, '█'],
-            [[0, 255, 0], Style.BRIGHT +        Fore.GREEN, '█'],
-            [[0, 255, 255], Style.BRIGHT +      Fore.CYAN, '█'],
-            [[255, 0, 0], Style.BRIGHT +        Fore.RED, '█'],
-            [[255, 0, 255], Style.BRIGHT +      Fore.MAGENTA, '█'],
-            [[255, 255, 0], Style.BRIGHT +      Fore.YELLOW, '█'],
-            [[255, 255, 255], Style.BRIGHT +    Fore.WHITE, '█'],
+            [[0, 0, 0], Style.DIM + Fore.BLACK, '█'],
+            [[0, 0, 128], Style.DIM + Fore.BLUE, '█'],
+            [[0, 128, 0], Style.DIM + Fore.GREEN, '█'],
+            [[0, 128, 128], Style.DIM + Fore.CYAN, '█'],
+            [[128, 0, 0], Style.DIM + Fore.RED, '█'],
+            [[128, 0, 128], Style.DIM + Fore.MAGENTA, '█'],
+            [[128, 128, 0], Style.DIM + Fore.YELLOW, '█'],
+            [[192, 192, 192], Style.DIM + Fore.WHITE, '█'],
+            [[128, 128, 128], Style.BRIGHT + Fore.BLACK, '█'],
+            [[0, 0, 255], Style.BRIGHT + Fore.BLUE, '█'],
+            [[0, 255, 0], Style.BRIGHT + Fore.GREEN, '█'],
+            [[0, 255, 255], Style.BRIGHT + Fore.CYAN, '█'],
+            [[255, 0, 0], Style.BRIGHT + Fore.RED, '█'],
+            [[255, 0, 255], Style.BRIGHT + Fore.MAGENTA, '█'],
+            [[255, 255, 0], Style.BRIGHT + Fore.YELLOW, '█'],
+            [[255, 255, 255], Style.BRIGHT + Fore.WHITE, '█'],
             [[174, 142, 142], Style.DIM + Back.WHITE + Fore.RED, '▒'],
             [[219, 140, 145], Style.DIM + Back.LIGHTWHITE_EX + Fore.RED, '▒'],
-            [[128, 100,   0], Style.DIM + Back.YELLOW + Fore.RED, '▒'],
-            [[ 80,  56,   0], Style.DIM + Back.GREEN  + Fore.RED, '▓'],
-            [[ 34,  33,  37], Back.BLACK  + Style.BRIGHT + Fore.BLACK, '▒'],
-            [[ 85,  84,  79], Back.BLACK  + Style.BRIGHT + Fore.BLACK, '▓'],
+            [[128, 100, 0], Style.DIM + Back.YELLOW + Fore.RED, '▒'],
+            [[80, 56, 0], Style.DIM + Back.GREEN + Fore.RED, '▓'],
+            [[34, 33, 37], Back.BLACK + Style.BRIGHT + Fore.BLACK, '▒'],
+            [[85, 84, 79], Back.BLACK + Style.BRIGHT + Fore.BLACK, '▓'],
         ]
-
 
         self.color_codes = rgb_color_codes
 
@@ -94,8 +95,8 @@ class ImageInCli:
                 color = self.color_codes[self.nearest_color_indexes[rgb_str]]
                 color_code = ''
                 if not (color[1] == prev_color_code):
-                   color_code += Style.RESET_ALL + color[1]
-                   prev_color_code = color[1]
+                    color_code += Style.RESET_ALL + color[1]
+                    prev_color_code = color[1]
                 color_code += color[2]
 
                 line += color_code
