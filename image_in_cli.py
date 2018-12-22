@@ -26,7 +26,7 @@ class ImageInCli:
         anti_char_ratio_width = int(basewidth * char_ratio)
         wpercent = (basewidth / float(img.size[0]))
         hsize = int((float(img.size[1]) * float(wpercent)))
-        img = img.resize((anti_char_ratio_width, hsize), Image.ANTIALIAS)
+        img = img.resize((anti_char_ratio_width, hsize), Image.ANTIALIAS) 
         self.matrix = numpy.asarray(img)
     def init_color_codes(self):
         rgb_color_codes = [
