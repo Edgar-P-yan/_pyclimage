@@ -7,11 +7,13 @@ from shutil import get_terminal_size
 
 
 class ImageInCli:
-    image_path = sys.argv[1]
-    width = int(sys.argv[2]) if len(sys.argv) > 1 else get_terminal_size()[0]
+    image_path = None
+    width = None
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         colorama_init()
+        self.image_path = kwargs['image_path']
+        self.width = get_terminal_size()[0] if kwargs['width'] == None else kwargs['width'] 
         self.matrix = None
         self.color_codes = None
         self.nearest_color_indexes = None
@@ -105,12 +107,25 @@ class ImageInCli:
         print(Style.RESET_ALL)
 
 
-start = timer()
-cli_image = ImageInCli()
-end = timer()
-print('Time: {0}s'.format(end - start))
-
-start = timer()
-cli_image.draw_image()
-end = timer()
-print('Time: {0}s'.format(end - start))
+if __name__ == '__main__':
+    def print_help():
+        print('''
+Command Line Usage
+python -m $MODULE_NAME$ [help] [img=img_path] [width=width?]
+''')
+    
+    if len(sys.argv) == 1 or sys.argv[1]=='help' or sys.argv[1] == '/?':
+         print_help()
+         exit(0)
+    else:
+        print(sys.argv)
+        opts = dict(list(map(lambda field:field.split('='), sys.argv[1:])))
+        print(opts)
+        if not ('img' in opts):
+            print('Error: Specify image path by img argument')
+            print_help()
+            exit(1)
+            
+        cli_img = ImageInCli(image_path=opts['img'], width=int(opts['width']) if 'width' in opts else None)    
+        cli_img.draw_image()
+    
